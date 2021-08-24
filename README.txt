@@ -5,8 +5,6 @@ solamente inserire le relative risorse.
 La struttura della repository si presenta nel seguente modo:
 
 |–– doc
-|    |–– Documentazione
-|    |–– Presentazione
 |    |–– video
 |-- res
 |    |-- esercizi
@@ -32,4 +30,4 @@ Nel seguito si dettagliano i ruoli dei diversi componenti:
 
 - src: la cartella principale del progetto, in cui si trova il codice dell’applicazione
 
-Questa variante dell'applicazione determina l'esecuzione corretta dell'esercizio con una lstm addestrata sugli angoli di un esempio di esecuzione corretta dell'esercizio
+Questa variante dell'applicazione determina l'esecuzione corretta dell'esercizio calcolando gli angoli
