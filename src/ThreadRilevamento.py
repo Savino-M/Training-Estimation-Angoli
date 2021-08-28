@@ -22,14 +22,16 @@ class ThreadEsecuzione(Thread):
         listaAngoli = list()
         soglia = None
 
+        # viene restituita una lista contenente gli angoli rilevanti per l'esercizio e la soglia
+        # inoltre viene valutata l'esecuzione
         if esercizio == "squat":
             listaAngoli, soglia = CalcolaAngoli.angoliSquat(results, mpPose)
-            ValutaAngoli.valutaSquat(listaAngoli, frame)
+            valutazione = ValutaAngoli.valutaSquat(listaAngoli, frame)
         elif esercizio == "bicipiti":
             listaAngoli, soglia = CalcolaAngoli.angoliBicipiti(results, mpPose)
-            ValutaAngoli.valutaBicipiti(listaAngoli, frame)
+            valutazione = ValutaAngoli.valutaBicipiti(listaAngoli, frame)
 
-        return listaAngoli, soglia
+        return listaAngoli, soglia, valutazione
 
     def run(self):
 
@@ -68,7 +70,7 @@ class ThreadEsecuzione(Thread):
                 image_height, image_width, _ = frame.shape
 
                 # vengono calcolati gli angoli rilevanti per l'esercizio scelto
-                listaAngoli, soglia = ThreadEsecuzione.scegliEsercizio(self, results, mpPose, frame)
+                listaAngoli, soglia, valutazione = ThreadEsecuzione.scegliEsercizio(self, results, mpPose, frame)
 
                 numAngoli = len(listaAngoli)
 
@@ -89,7 +91,7 @@ class ThreadEsecuzione(Thread):
                         j += 1
 
                         # se tutti gli angoli rilevanti per l'esercizio sono maggiori della soglia
-                    if j == numAngoli and posizione == "Giù":
+                    if j == numAngoli and posizione == "Giù" and valutazione == "OK":
                         posizione = "Su"
                         numRipetizioniContate += 1
 
@@ -100,9 +102,9 @@ class ThreadEsecuzione(Thread):
                         numSerieContate += 1
                         numRipetizioniContate = 0
                         if numSerieContate < numSerie:
-                            playsound("../res/sounds/mess/recupero.mp3")
+                            #playsound("../res/sounds/mess/recupero.mp3")
                             cv2.waitKey(90000)
-                            playsound("../res/sounds/mess/ripartenza.mp3")
+                            #playsound("../res/sounds/mess/ripartenza.mp3")
             # else:
             # playsound("../res/sounds/mess/posizionamento.mp3")
 

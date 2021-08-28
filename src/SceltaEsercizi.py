@@ -2,7 +2,6 @@ import tkinter as tk
 from functools import partial
 from tkinter import LEFT
 
-import keyboard
 import speech_recognition as sr
 from playsound import playsound
 

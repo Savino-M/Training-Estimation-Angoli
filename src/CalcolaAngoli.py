@@ -16,54 +16,95 @@ def calcolaAngolo(a, b, c):
     return round(angle, 3)
 
 
-def angoliSquat(results, mpPose):
+def calcolaAngoli(results, mp_pose):
     listaAngoli = list()
 
     # ricava le coordinate dei landamrks
-    spalladx = results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_SHOULDER.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_SHOULDER.value].y
-    spallasx = results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_SHOULDER.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_SHOULDER.value].y
+    spallaSinistra = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+    spallaDestra = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
+    gomitoSinistro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ELBOW.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
+    gomitoDestro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ELBOW.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ELBOW.value].y]
+    polsoSinistro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_WRIST.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
+    polsoDestro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_WRIST.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
+    fiancoSinistro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_HIP.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+    fiancoDestro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_HIP.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_HIP.value].y]
+    ginocchioSinistro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_KNEE.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+    ginocchioDestro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE.value].y]
+    cavigliaSinistra = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ANKLE.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+    cavigliaDestra = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ANKLE.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ANKLE.value].y]
+    indicePiedeSinistro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_FOOT_INDEX.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_FOOT_INDEX.value].y]
+    indicePiedeDestro = [results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_FOOT_INDEX.value].x, results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_FOOT_INDEX.value].y]
 
-    cavigliadx = results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_ANKLE.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_ANKLE.value].y
-    cavigliasx = results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_ANKLE.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_ANKLE.value].y
+    angoloSpallaGomitoPolsoSX = calcolaAngolo(spallaSinistra, gomitoSinistro, polsoSinistro)
+    listaAngoli.append(angoloSpallaGomitoPolsoSX)
 
-    ginocchiodx = results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_KNEE.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_KNEE.value].y
-    ginocchiosx = results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_KNEE.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_KNEE.value].y
+    angoloSpallaGomitoPolsoDX = calcolaAngolo(spallaDestra, gomitoDestro, polsoDestro)
+    listaAngoli.append(angoloSpallaGomitoPolsoDX)
 
-    fiancodx = results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_HIP.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_HIP.value].y
-    fiancosx = results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_HIP.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_HIP.value].y
+    angoloGomitoSpallaFiancoSX = calcolaAngolo(gomitoSinistro, spallaSinistra, fiancoSinistro)
+    listaAngoli.append(angoloGomitoSpallaFiancoSX)
 
-    # calcola gli angoli
-    angoloSpallaFiancoGinocchioDx = Angolo("Fianco Destro", calcolaAngolo(spalladx, fiancodx, ginocchiodx))
-    angoloSpallaFiancoGinocchioSx = Angolo("Fianco Sinistro", calcolaAngolo(spallasx, fiancosx, ginocchiosx))
-    angoloFiancoGinocchioCavigliaDx = Angolo("Gamba Destra", calcolaAngolo(fiancodx, ginocchiodx, cavigliadx))
-    angoloFiancoGinocchioCavigliaSx = Angolo("Gamba Sinistra", calcolaAngolo(fiancosx, ginocchiosx, cavigliasx))
+    angoloGomitoSpallaFiancoDX = calcolaAngolo(gomitoDestro, spallaDestra, fiancoDestro)
+    listaAngoli.append(angoloGomitoSpallaFiancoDX)
 
-    listaAngoli.append(angoloSpallaFiancoGinocchioDx)
-    listaAngoli.append(angoloSpallaFiancoGinocchioSx)
-    listaAngoli.append(angoloFiancoGinocchioCavigliaDx)
-    listaAngoli.append(angoloFiancoGinocchioCavigliaSx)
+    angoloSpallaFiancoGinocchioSX = calcolaAngolo(spallaSinistra, fiancoSinistro, ginocchioSinistro)
+    listaAngoli.append(angoloSpallaFiancoGinocchioSX)
 
-    return listaAngoli, 170
+    angoloSpallaFiancoGinocchioDX = calcolaAngolo(spallaDestra, fiancoDestro, ginocchioDestro)
+    listaAngoli.append(angoloSpallaFiancoGinocchioDX)
+
+    angoloFiancoGinocchioCavigliaSX = calcolaAngolo(fiancoSinistro, ginocchioSinistro, cavigliaSinistra)
+    listaAngoli.append(angoloFiancoGinocchioCavigliaSX)
+
+    angoloFiancoGinocchioCavigliaDX = calcolaAngolo(fiancoDestro, ginocchioDestro, cavigliaDestra)
+    listaAngoli.append(angoloFiancoGinocchioCavigliaDX)
+
+    angoloGinocchioCavigliaIndicePiedeSX = calcolaAngolo(ginocchioSinistro, cavigliaSinistra, indicePiedeSinistro)
+    listaAngoli.append(angoloGinocchioCavigliaIndicePiedeSX)
+
+    angoloGinocchioCavigliaIndicePiedeDX = calcolaAngolo(ginocchioDestro, cavigliaDestra, indicePiedeDestro)
+    listaAngoli.append(angoloGinocchioCavigliaIndicePiedeDX)
+
+    angoloGinocchioFiancoDXFiancoSX = calcolaAngolo(ginocchioDestro, fiancoDestro, fiancoSinistro)
+    listaAngoli.append(angoloGinocchioFiancoDXFiancoSX)
+
+    angoloGinocchioFiancoSXFiancoDX = calcolaAngolo(ginocchioSinistro, fiancoSinistro, fiancoDestro)
+    listaAngoli.append(angoloGinocchioFiancoSXFiancoDX)
+
+    return listaAngoli
+
+
+def angoliSquat(results, mpPose):
+    listaAngoliSquat = list()
+
+    # calcola tutti gli angoli
+    listaAngoli = calcolaAngoli(results, mpPose)
+
+    # calcola gli angoli rilevanti per lo squat
+    angoloSpallaFiancoGinocchioDX = Angolo("Fianco Destro", listaAngoli[5])
+    angoloSpallaFiancoGinocchioSX = Angolo("Fianco Sinistro", listaAngoli[4])
+    angoloFiancoGinocchioCavigliaDX = Angolo("Gamba Destra", listaAngoli[6])
+    angoloFiancoGinocchioCavigliaSX = Angolo("Gamba Sinistra", listaAngoli[7])
+
+    listaAngoliSquat.append(angoloSpallaFiancoGinocchioDX)
+    listaAngoliSquat.append(angoloSpallaFiancoGinocchioSX)
+    listaAngoliSquat.append(angoloFiancoGinocchioCavigliaDX)
+    listaAngoliSquat.append(angoloFiancoGinocchioCavigliaSX)
+
+    return listaAngoliSquat, 170
 
 
 def angoliBicipiti(results, mpPose):
-    listaAngoli = list()
+    listaAngoliBicipiti = list()
 
-    # ricava le coordinate dei landamrks
-    spalladx = results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_SHOULDER.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_SHOULDER.value].y
-    spallasx = results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_SHOULDER.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_SHOULDER.value].y
+    # calcola tutti gli angoli
+    listaAngoli = calcolaAngoli(results, mpPose)
 
-    gomitodx = results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_ELBOW.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_ELBOW.value].y
-    gomitosx = results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_ELBOW.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_ELBOW.value].y
+    # calcola gli angoli rilevanti per i bicipiti
+    angoloSpallaGomitoPolsoSX = Angolo("Bicipite sinistro", listaAngoli[0])
+    angoloSpallaGomitoPolsoDX = Angolo("Bicipite Destro", listaAngoli[1])
 
-    polsodx = results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_WRIST.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.RIGHT_WRIST.value].y
-    polsosx = results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_WRIST.value].x, results.pose_landmarks.landmark[mpPose.PoseLandmark.LEFT_WRIST.value].y
+    listaAngoliBicipiti.append(angoloSpallaGomitoPolsoDX)
+    listaAngoliBicipiti.append(angoloSpallaGomitoPolsoSX)
 
-    # calcola gli angoli
-    angoloBicipiteSx = Angolo("Bicipite sinistro", calcolaAngolo(spallasx, gomitosx, polsosx))
-    angoloBicipiteDx = Angolo("Bicipite Destro", calcolaAngolo(spalladx, gomitodx, polsodx))
-
-    listaAngoli.append(angoloBicipiteDx)
-    listaAngoli.append(angoloBicipiteSx)
-
-    return listaAngoli, 160
+    return listaAngoliBicipiti, 160
