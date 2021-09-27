@@ -1,4 +1,4 @@
-Training Estimation è un'applicazione pensata per aiutare gli utenti meno esperti nello svolgimento di esercizi fisici. Al momento gli esercizi supportati sono le flessioni e gli squat. Per aggiungerne altri, bisogna
+Training Estimation è un'applicazione pensata per aiutare gli utenti meno esperti nello svolgimento di esercizi fisici. L'utente accede all'app tramite face recognition e può caricare la propria scheda di allenamento. Al momento gli esercizi supportati sono i bicipiti e gli squat. Per aggiungerne altri, bisogna
 solamente inserire le relative risorse.
 
 
